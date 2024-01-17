@@ -1,15 +1,24 @@
 .bg {
-    background-image: url(../assets/tengyart-pYlSLXkduQg-unsplash.jpg);
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("../assets/tengyart-pYlSLXkduQg-unsplash.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    opacity: 0.7;
 }
 
 .sixCaps {
-    font-family: 'Six Caps', sans-serif;;
+    font-family: 'Six Caps', sans-serif;
 }
 
 .josefinSlab {
-    font-family: 'Josefin Slab', serif;;
+    font-family: 'Josefin Slab', serif;
+    font-weight: 600;
+}
+
+.whiteF {
+    color: #FFFFFF;
+}
+
+hr {
+    /* width: 60%; */
+    margin: auto;
 }
