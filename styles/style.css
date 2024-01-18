@@ -28,3 +28,11 @@ hr {
     width: 260px !important;
 }
 
+.font-30 {
+    font-size: 30px;
+}
+
+.font-60 {
+    font-size: 50px;
+    /* font-weight: lighter; */
+}

@@ -20,18 +20,18 @@ modeCpuBtn.addEventListener('click', function () {
     ToggleModeBtn(modeCpuBtn, modeOneBtn);
 });
 
-function ToggleModeBtn(clickedBtn, unselectedBtn) {
+async function ToggleModeBtn(clickedBtn, unselectedBtn) {
     if (mode) {
         unselectedBtn.classList.add("bg-transparent", "whiteF");
         clickedBtn.classList.remove("bg-transparent", "whiteF");
-        if (clickedBtn === "modeOneBtn") {
+        if (clickedBtn === modeOneBtn) {
             mode = "modeOne";
         } else {
             mode = "modeCpu";
         }
     } else {
         clickedBtn.classList.remove("bg-transparent", "whiteF");
-        if (clickedBtn === "modeOneBtn") {
+        if (clickedBtn === modeOneBtn) {
             mode = "modeOne";
         } else {
             mode = "modeCpu";
@@ -39,19 +39,131 @@ function ToggleModeBtn(clickedBtn, unselectedBtn) {
     }
 }
 
+// Round Variables
+let roundButtonsArr = [];
+const roundLabelsArr = ["1 / 1", "3 / 5", "4 / 7"];
+
 // Round Selection
-function createRoundBtn(text, value){}
+async function CreateRoundBtn(text, value) {
+    const roundDiv = document.createElement("div");
+    roundDiv.setAttribute("class", "col-auto");
+
+    const roundBtn = document.createElement("button");
+    roundBtn.classList.add("btn", "btn-light", "bg-transparent", "whiteF", "px-4", "py-2");
+    roundBtn.textContent = text;
+
+    roundDiv.appendChild(roundBtn);
+    mainArea.appendChild(roundDiv);
+    roundButtonsArr.push(roundBtn);
+
+    roundBtn.addEventListener('click', function () {
+        if (rounds) {
+            roundButtonsArr.forEach(btn => btn.classList.add("bg-transparent", "whiteF"));
+            roundBtn.classList.remove("bg-transparent", "whiteF");
+            rounds = value;
+        } else {
+            roundBtn.classList.remove("bg-transparent", "whiteF");
+            rounds = value;
+        }
+    });
+}
 
 // Next Button
 nextBtn.addEventListener('click', function () {
-    if (mode && !rounds) {
+    if (mode && rounds && playerChoice.length == 1) {
+        if (mode === "modeOne") {
+            //ask for player two input
+        } else if (mode === "modeCpu") {
+            callApi();
+        }
+    } else if (mode && rounds) {
+        mainTitle.innerHTML = "Player 1: Make your Move";
+        mainArea.innerHTML = "";
+        iconClassArr.forEach((type) => CreateGameArea(type));
+        // GamePlay(mode, rounds);
+    }
+    else if (mode) {
         mainTitle.innerHTML = "Choose Rounds";
         mainArea.innerHTML = "";
-        // create rounds buttons
-    } else if (mode && rounds) {
-        gamePlay(mode, rounds);
+        roundLabelsArr.forEach((label, index) => CreateRoundBtn(label, index + 1));
     }
 });
+
+// Game Play
+async function GamePlay(mode, rounds) {
+    if (mode === "modeOne") {
+        mainTitle.innerHTML = "Player 1: Make your Move";
+        mainArea.innerHTML = "";
+        RoundControl(rounds);
+    } else if (mode === "modeCpu") {
+        mainTitle.innerHTML = "Player 1: Make your Move";
+        mainArea.innerHTML = "";
+    }
+}
+
+// Game Play Variables
+let modeOneScore = 0;
+let playerChoice = [];
+let cpuChoice;
+
+// Icon Variables
+let iconClassArr = ["fa-hand-back-fist", "fa-hand", "fa-hand-scissors", "fa-hand-lizard", "fa-hand-spock"];
+let iconButtonsArr = [];
+let iconTagArr = [];
+
+async function RoundControl(rounds) {
+    let roundNum;
+    switch (rounds) {
+        case 1:
+            roundNum = 1;
+            break;
+        case 2:
+            roundNum = 3;
+            break;
+        case 3:
+            roundNum = 4;
+            break;
+    }
+    for (let i = 0; i < roundNum; i++) {
+        iconClassArr.forEach((type) => CreateGameArea(type));
+    }
+}
+
+async function CreateGameArea(type) {
+    const playDiv = document.createElement("div");
+    playDiv.setAttribute("class", "col-auto");
+
+    const iconBtn = document.createElement("button");
+    iconBtn.classList.add("btn");
+
+    const iconTag = document.createElement("i");
+    iconTag.classList.add("fa-regular", type, "font-60");
+
+    iconBtn.appendChild(iconTag);
+    playDiv.appendChild(iconBtn);
+    mainArea.appendChild(playDiv);
+
+    iconTagArr.push(iconTag);
+    iconButtonsArr.push(iconBtn);
+
+    iconBtn.addEventListener('click', function () {
+        playerChoice.push(iconButtonsArr.indexOf(iconBtn));
+        iconTagArr.forEach(tag => {
+            tag.classList.remove("fa-solid");
+            tag.classList.add("fa-regular");
+        });
+        iconTag.classList.remove("fa-regular");
+        iconTag.classList.add("fa-solid");
+        // 0 = rock, 1 = paper, 2 = scissors, 3 = lizard, 4 = spock
+    });
+}
+
+async function callApi(){
+    const promise = await fetch("https://rpslsapi.azurewebsites.net/RPSLS");
+    const data = await promise.json;
+    cpuChoice = data;
+    console.log(cpuChoice);
+}
 
 
 
@@ -187,24 +299,3 @@ nextBtn.addEventListener('click', function () {
 //         gamePlay(mode, rounds);
 //     }
 // });
-
-function gamePlay(mode, rounds) {
-    if (mode === "modeOne") {
-        RoundControl(rounds);
-    } else if (mode === "modeCpu") {
-        mainTitle.innerHTML = "Player 1: Make your Move";
-        mainArea.innerHTML = "";
-    }
-
-}
-
-function RoundControl(rounds) {
-    for (let i = 0; i < rounds; i++) {
-        PlayerOne();
-    }
-}
-
-function PlayerOne() {
-    mainTitle.innerHTML = "Player 1: Make your Move";
-    mainArea.innerHTML = "";
-}
