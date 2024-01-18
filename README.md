@@ -1,4 +1,4 @@
-# Rock, Paper, Scissor, Lizard, Spock! ![Game Logo](./favicon.ico)
+# Rock, Paper, Scissor, Lizard, Spock!
 
 **Name:** Elizabeth Trotter
 
