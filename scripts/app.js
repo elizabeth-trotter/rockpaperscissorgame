@@ -2,6 +2,7 @@
 let header = document.getElementById("header");
 let mainTitle = document.getElementById("mainTitle");
 let mainArea = document.getElementById("mainArea");
+let selectionTag = document.getElementById("selectionTag");
 
 let modeOneBtn = document.getElementById("modeOneBtn");
 let modeCpuBtn = document.getElementById("modeCpuBtn");
@@ -9,7 +10,8 @@ let modeCpuBtn = document.getElementById("modeCpuBtn");
 let nextBtn = document.getElementById("nextBtn");
 
 // JavaScript Variables
-let mode, rounds;
+let mode, rounds, roundNum;
+let roundCount = 0;
 
 // Mode Selection
 modeOneBtn.addEventListener('click', function () {
@@ -70,17 +72,33 @@ async function CreateRoundBtn(text, value) {
 
 // Next Button
 nextBtn.addEventListener('click', function () {
-    if (mode && rounds && playerChoice.length == 1) {
+    if (mode && roundNum && playerChoice.length == 1) {
         if (mode === "modeOne") {
             //ask for player two input
+            roundCount++;
         } else if (mode === "modeCpu") {
+            mainTitle.innerHTML = "CPU: Make your Move";
+            mainArea.innerHTML = "Selecting a choice..";
             callApi();
+            playerChoice.push(cpuChoice);
+            roundCount++;
         }
     } else if (mode && rounds) {
         mainTitle.innerHTML = "Player 1: Make your Move";
         mainArea.innerHTML = "";
         iconClassArr.forEach((type) => CreateGameArea(type));
         // GamePlay(mode, rounds);
+        switch (rounds) {
+            case 1:
+                roundNum = 1;
+                break;
+            case 2:
+                roundNum = 3;
+                break;
+            case 3:
+                roundNum = 4;
+                break;
+        }
     }
     else if (mode) {
         mainTitle.innerHTML = "Choose Rounds";
@@ -90,16 +108,16 @@ nextBtn.addEventListener('click', function () {
 });
 
 // Game Play
-async function GamePlay(mode, rounds) {
-    if (mode === "modeOne") {
-        mainTitle.innerHTML = "Player 1: Make your Move";
-        mainArea.innerHTML = "";
-        RoundControl(rounds);
-    } else if (mode === "modeCpu") {
-        mainTitle.innerHTML = "Player 1: Make your Move";
-        mainArea.innerHTML = "";
-    }
-}
+// async function GamePlay(mode, rounds) {
+//     if (mode === "modeOne") {
+//         mainTitle.innerHTML = "Player 1: Make your Move";
+//         mainArea.innerHTML = "";
+//         RoundControl(rounds);
+//     } else if (mode === "modeCpu") {
+//         mainTitle.innerHTML = "Player 1: Make your Move";
+//         mainArea.innerHTML = "";
+//     }
+// }
 
 // Game Play Variables
 let modeOneScore = 0;
@@ -111,23 +129,23 @@ let iconClassArr = ["fa-hand-back-fist", "fa-hand", "fa-hand-scissors", "fa-hand
 let iconButtonsArr = [];
 let iconTagArr = [];
 
-async function RoundControl(rounds) {
-    let roundNum;
-    switch (rounds) {
-        case 1:
-            roundNum = 1;
-            break;
-        case 2:
-            roundNum = 3;
-            break;
-        case 3:
-            roundNum = 4;
-            break;
-    }
-    for (let i = 0; i < roundNum; i++) {
-        iconClassArr.forEach((type) => CreateGameArea(type));
-    }
-}
+// async function RoundControl(rounds) {
+//     let roundNum;
+//     switch (rounds) {
+//         case 1:
+//             roundNum = 1;
+//             break;
+//         case 2:
+//             roundNum = 3;
+//             break;
+//         case 3:
+//             roundNum = 4;
+//             break;
+//     }
+//     for (let i = 0; i < roundNum; i++) {
+//         iconClassArr.forEach((type) => CreateGameArea(type));
+//     }
+// }
 
 async function CreateGameArea(type) {
     const playDiv = document.createElement("div");
@@ -147,7 +165,8 @@ async function CreateGameArea(type) {
     iconButtonsArr.push(iconBtn);
 
     iconBtn.addEventListener('click', function () {
-        playerChoice.push(iconButtonsArr.indexOf(iconBtn));
+        let choice = iconButtonsArr.indexOf(iconBtn);
+        playerChoice.push(choice);
         iconTagArr.forEach(tag => {
             tag.classList.remove("fa-solid");
             tag.classList.add("fa-regular");
@@ -155,10 +174,28 @@ async function CreateGameArea(type) {
         iconTag.classList.remove("fa-regular");
         iconTag.classList.add("fa-solid");
         // 0 = rock, 1 = paper, 2 = scissors, 3 = lizard, 4 = spock
+        selectionTag.textContent = "";
+        switch (choice) {
+            case 0:
+                selectionTag.textContent = "Rock";
+                break;
+            case 1:
+                selectionTag.textContent = "Paper";
+                break;
+            case 2:
+                selectionTag.textContent = "Scissors";
+                break;
+            case 3:
+                selectionTag.textContent = "Lizard";
+                break;
+            case 4:
+                selectionTag.textContent = "Spock";
+                break;
+        }
     });
 }
 
-async function callApi(){
+async function callApi() {
     const promise = await fetch("https://rpslsapi.azurewebsites.net/RPSLS");
     const data = await promise.json;
     cpuChoice = data;
