@@ -23,7 +23,7 @@ modeCpuBtn.addEventListener('click', function () {
     ToggleModeBtn(modeCpuBtn, modeOneBtn);
 });
 
-async function ToggleModeBtn(clickedBtn, unselectedBtn) {
+function ToggleModeBtn(clickedBtn, unselectedBtn) {
     if (mode) {
         unselectedBtn.classList.add("bg-transparent", "whiteF");
         clickedBtn.classList.remove("bg-transparent", "whiteF");
@@ -47,7 +47,7 @@ let roundButtonsArr = [];
 const roundLabelsArr = ["1 / 1", "3 / 5", "4 / 7"];
 
 // Round Selection
-async function CreateRoundBtn(text, value) {
+function CreateRoundBtn(text, value) {
     const roundDiv = document.createElement("div");
     roundDiv.setAttribute("class", "col-auto");
 
@@ -108,7 +108,10 @@ nextBtn.addEventListener('click', function () {
         mainArea.innerHTML = "";
         iconClassArr.forEach((type) => CreateGameArea(type));
 
-        playerOneChoice = choice;
+        if (userHasSelected) {
+            playerOneChoice = choice;
+        }
+        console.log(playerOneChoice);
 
         // GamePlay(mode, rounds);
         switch (rounds) {
@@ -122,19 +125,19 @@ nextBtn.addEventListener('click', function () {
                 roundNum = 4;
                 break;
         }
-        console.log(playerOneChoice);
-        console.log(roundCount);
-        console.log(mode);
-        console.log(roundNum);
+        // console.log(playerOneChoice);
+        // console.log(roundCount);
+        // console.log(mode);
+        // console.log(roundNum);
     }
     else if (mode) {
         mainTitle.innerHTML = "Choose Rounds";
         mainArea.innerHTML = "";
         roundLabelsArr.forEach((label, index) => CreateRoundBtn(label, index + 1));
-        console.log(choice);
-        console.log(roundCount);
-        console.log(mode);
-        console.log(roundNum);
+        // console.log(choice);
+        // console.log(roundCount);
+        // console.log(mode);
+        // console.log(roundNum);
     }
 });
 
@@ -180,7 +183,7 @@ let iconTagArr = [];
 //     }
 // }
 
-async function CreateGameArea(type) {
+function CreateGameArea(type) {
     const playDiv = document.createElement("div");
     playDiv.setAttribute("class", "col-auto");
 
@@ -198,9 +201,9 @@ async function CreateGameArea(type) {
     iconButtonsArr.push(iconBtn);
 
     iconBtn.addEventListener('click', function () {
-        userHasSelected = true;
         choice = iconButtonsArr.indexOf(iconBtn) + 1;
-
+        userHasSelected = true;
+        // console.log(choice);
         iconTagArr.forEach(tag => {
             tag.classList.remove("fa-solid");
             tag.classList.add("fa-regular");
@@ -211,8 +214,9 @@ async function CreateGameArea(type) {
         selectionTag.textContent = "";
         // Handle other cases, if needed
         if (choice > 5) {
-            choice = Math.floor((choice - 1) / 5);
+            choice = ((choice - 1) % 5) + 1;
         }
+        // console.log(choice);
         switch (choice) {
             case 1:
                 selectionTag.textContent = "Rock";
