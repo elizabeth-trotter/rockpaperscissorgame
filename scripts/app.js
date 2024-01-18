@@ -108,9 +108,49 @@ nextBtn.addEventListener('click', function () {
         mainArea.innerHTML = "";
         iconClassArr.forEach((type) => CreateGameArea(type));
 
-        if (userHasSelected) {
-            playerOneChoice = choice;
-        }
+        iconButtonsArr.forEach(iconBtn => {
+            iconBtn.addEventListener('click', function () {
+                choice = iconButtonsArr.indexOf(iconBtn) + 1;
+                userHasSelected = true;
+                playerOneChoice = choice;
+                console.log(choice);
+
+                iconTagArr.forEach(tag => {
+                    tag.classList.remove("fa-solid");
+                    tag.classList.add("fa-regular");
+                });
+
+                iconTagArr[iconButtonsArr.indexOf(iconBtn)].classList.remove("fa-regular");
+                iconTagArr[iconButtonsArr.indexOf(iconBtn)].classList.add("fa-solid");
+
+                selectionTag.textContent = "";
+                // Handle other cases, if needed
+                if (choice > 5) {
+                    choice = ((choice - 1) % 5) + 1;
+                }
+                console.log(choice);
+                switch (choice) {
+                    case 1:
+                        selectionTag.textContent = "Rock";
+                        break;
+                    case 2:
+                        selectionTag.textContent = "Paper";
+                        break;
+                    case 3:
+                        selectionTag.textContent = "Scissors";
+                        break;
+                    case 4:
+                        selectionTag.textContent = "Lizard";
+                        break;
+                    case 5:
+                        selectionTag.textContent = "Spock";
+                        break;
+                }
+            });
+        });
+
+        // if (userHasSelected) {
+        // }
         console.log(playerOneChoice);
 
         // GamePlay(mode, rounds);
@@ -182,15 +222,16 @@ let iconTagArr = [];
 //         iconClassArr.forEach((type) => CreateGameArea(type));
 //     }
 // }
+let iconBtn, iconTag;
 
 function CreateGameArea(type) {
     const playDiv = document.createElement("div");
     playDiv.setAttribute("class", "col-auto");
 
-    const iconBtn = document.createElement("button");
+    iconBtn = document.createElement("button");
     iconBtn.classList.add("btn");
 
-    const iconTag = document.createElement("i");
+    iconTag = document.createElement("i");
     iconTag.classList.add("fa-regular", type, "font-60");
 
     iconBtn.appendChild(iconTag);
@@ -200,41 +241,41 @@ function CreateGameArea(type) {
     iconTagArr.push(iconTag);
     iconButtonsArr.push(iconBtn);
 
-    iconBtn.addEventListener('click', function () {
-        choice = iconButtonsArr.indexOf(iconBtn) + 1;
-        userHasSelected = true;
-        // console.log(choice);
-        iconTagArr.forEach(tag => {
-            tag.classList.remove("fa-solid");
-            tag.classList.add("fa-regular");
-        });
-        iconTag.classList.remove("fa-regular");
-        iconTag.classList.add("fa-solid");
+    // iconBtn.addEventListener('click', function () {
+    //     choice = iconButtonsArr.indexOf(iconBtn) + 1;
+    //     userHasSelected = true;
+    //     // console.log(choice);
+    //     iconTagArr.forEach(tag => {
+    //         tag.classList.remove("fa-solid");
+    //         tag.classList.add("fa-regular");
+    //     });
+    //     iconTag.classList.remove("fa-regular");
+    //     iconTag.classList.add("fa-solid");
 
-        selectionTag.textContent = "";
-        // Handle other cases, if needed
-        if (choice > 5) {
-            choice = ((choice - 1) % 5) + 1;
-        }
-        // console.log(choice);
-        switch (choice) {
-            case 1:
-                selectionTag.textContent = "Rock";
-                break;
-            case 2:
-                selectionTag.textContent = "Paper";
-                break;
-            case 3:
-                selectionTag.textContent = "Scissors";
-                break;
-            case 4:
-                selectionTag.textContent = "Lizard";
-                break;
-            case 5:
-                selectionTag.textContent = "Spock";
-                break;
-        }
-    });
+    //     selectionTag.textContent = "";
+    //     // Handle other cases, if needed
+    //     if (choice > 5) {
+    //         choice = ((choice - 1) % 5) + 1;
+    //     }
+    //     // console.log(choice);
+    //     switch (choice) {
+    //         case 1:
+    //             selectionTag.textContent = "Rock";
+    //             break;
+    //         case 2:
+    //             selectionTag.textContent = "Paper";
+    //             break;
+    //         case 3:
+    //             selectionTag.textContent = "Scissors";
+    //             break;
+    //         case 4:
+    //             selectionTag.textContent = "Lizard";
+    //             break;
+    //         case 5:
+    //             selectionTag.textContent = "Spock";
+    //             break;
+    //     }
+    // });
 }
 
 async function callApi() {
