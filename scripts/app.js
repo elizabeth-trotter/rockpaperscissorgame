@@ -12,6 +12,7 @@ let nextBtn = document.getElementById("nextBtn");
 // JavaScript Variables
 let mode, rounds, roundNum;
 let roundCount = 0;
+let userHasSelected = false;
 
 // Mode Selection
 modeOneBtn.addEventListener('click', function () {
@@ -72,21 +73,43 @@ async function CreateRoundBtn(text, value) {
 
 // Next Button
 nextBtn.addEventListener('click', function () {
-    if (mode && roundNum && playerChoice.length == 1) {
+    userHasSelected = false;
+    if (mode && roundNum && playerOneChoice) {
         if (mode === "modeOne") {
-            //ask for player two input
-            roundCount++;
+            mainTitle.innerHTML = "Player 2: Make your Move";
+            mainArea.innerHTML = "";
+            selectionTag.textContent = "";
+            iconClassArr.forEach((type) => CreateGameArea(type));
+            if (userHasSelected) {
+                playerTwoChoice = choice;
+                roundCount++;
+            }
+            console.log(playerOneChoice);
+            console.log(roundCount);
+            console.log(mode);
+            console.log(roundNum);
+
         } else if (mode === "modeCpu") {
             mainTitle.innerHTML = "CPU: Make your Move";
             mainArea.innerHTML = "Selecting a choice..";
+            selectionTag.textContent = "";
             callApi();
-            playerChoice.push(cpuChoice);
-            roundCount++;
+            if (userHasSelected) {
+                playerTwoChoice = cpuChoice;
+                roundCount++;
+            }
+            console.log(playerOneChoice);
+            console.log(roundCount);
+            console.log(mode);
+            console.log(roundNum);
         }
     } else if (mode && rounds) {
         mainTitle.innerHTML = "Player 1: Make your Move";
         mainArea.innerHTML = "";
         iconClassArr.forEach((type) => CreateGameArea(type));
+
+        playerOneChoice = choice;
+
         // GamePlay(mode, rounds);
         switch (rounds) {
             case 1:
@@ -99,11 +122,19 @@ nextBtn.addEventListener('click', function () {
                 roundNum = 4;
                 break;
         }
+        console.log(playerOneChoice);
+        console.log(roundCount);
+        console.log(mode);
+        console.log(roundNum);
     }
     else if (mode) {
         mainTitle.innerHTML = "Choose Rounds";
         mainArea.innerHTML = "";
         roundLabelsArr.forEach((label, index) => CreateRoundBtn(label, index + 1));
+        console.log(choice);
+        console.log(roundCount);
+        console.log(mode);
+        console.log(roundNum);
     }
 });
 
@@ -121,7 +152,9 @@ nextBtn.addEventListener('click', function () {
 
 // Game Play Variables
 let modeOneScore = 0;
-let playerChoice = [];
+let choice;
+let playerOneChoice;
+let playerTwoChoice;
 let cpuChoice;
 
 // Icon Variables
@@ -165,30 +198,35 @@ async function CreateGameArea(type) {
     iconButtonsArr.push(iconBtn);
 
     iconBtn.addEventListener('click', function () {
-        let choice = iconButtonsArr.indexOf(iconBtn);
-        playerChoice.push(choice);
+        userHasSelected = true;
+        choice = iconButtonsArr.indexOf(iconBtn) + 1;
+
         iconTagArr.forEach(tag => {
             tag.classList.remove("fa-solid");
             tag.classList.add("fa-regular");
         });
         iconTag.classList.remove("fa-regular");
         iconTag.classList.add("fa-solid");
-        // 0 = rock, 1 = paper, 2 = scissors, 3 = lizard, 4 = spock
+
         selectionTag.textContent = "";
+        // Handle other cases, if needed
+        if (choice > 5) {
+            choice = Math.floor((choice - 1) / 5);
+        }
         switch (choice) {
-            case 0:
+            case 1:
                 selectionTag.textContent = "Rock";
                 break;
-            case 1:
+            case 2:
                 selectionTag.textContent = "Paper";
                 break;
-            case 2:
+            case 3:
                 selectionTag.textContent = "Scissors";
                 break;
-            case 3:
+            case 4:
                 selectionTag.textContent = "Lizard";
                 break;
-            case 4:
+            case 5:
                 selectionTag.textContent = "Spock";
                 break;
         }
@@ -197,9 +235,25 @@ async function CreateGameArea(type) {
 
 async function callApi() {
     const promise = await fetch("https://rpslsapi.azurewebsites.net/RPSLS");
-    const data = await promise.json;
-    cpuChoice = data;
-    console.log(cpuChoice);
+    const data = await promise.text();
+
+    switch (data) {
+        case "Rock":
+            cpuChoice = 1;
+            break;
+        case "Paper":
+            cpuChoice = 2;
+            break;
+        case "Scissors":
+            cpuChoice = 3;
+            break;
+        case "Lizard":
+            cpuChoice = 4;
+            break;
+        case "Spock":
+            cpuChoice = 5;
+            break;
+    }
 }
 
 
