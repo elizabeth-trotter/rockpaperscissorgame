@@ -12,7 +12,6 @@ let nextBtn = document.getElementById("nextBtn");
 // JavaScript Variables
 let mode, rounds, roundNum;
 let roundCount = 0;
-let userHasSelected = false;
 
 // Mode Selection
 modeOneBtn.addEventListener('click', function () {
@@ -68,92 +67,7 @@ function CreateRoundBtn(text, value) {
             roundBtn.classList.remove("bg-transparent", "whiteF");
             rounds = value;
         }
-    });
-}
 
-// Next Button
-nextBtn.addEventListener('click', function () {
-    userHasSelected = false;
-    if (mode && roundNum && playerOneChoice) {
-        if (mode === "modeOne") {
-            mainTitle.innerHTML = "Player 2: Make your Move";
-            mainArea.innerHTML = "";
-            selectionTag.textContent = "";
-            iconClassArr.forEach((type) => CreateGameArea(type));
-            if (userHasSelected) {
-                playerTwoChoice = choice;
-                roundCount++;
-            }
-            console.log(playerOneChoice);
-            console.log(roundCount);
-            console.log(mode);
-            console.log(roundNum);
-
-        } else if (mode === "modeCpu") {
-            mainTitle.innerHTML = "CPU: Make your Move";
-            mainArea.innerHTML = "Selecting a choice..";
-            selectionTag.textContent = "";
-            callApi();
-            if (userHasSelected) {
-                playerTwoChoice = cpuChoice;
-                roundCount++;
-            }
-            console.log(playerOneChoice);
-            console.log(roundCount);
-            console.log(mode);
-            console.log(roundNum);
-        }
-    } else if (mode && rounds) {
-        mainTitle.innerHTML = "Player 1: Make your Move";
-        mainArea.innerHTML = "";
-        iconClassArr.forEach((type) => CreateGameArea(type));
-
-        iconButtonsArr.forEach(iconBtn => {
-            iconBtn.addEventListener('click', function () {
-                choice = iconButtonsArr.indexOf(iconBtn) + 1;
-                userHasSelected = true;
-                playerOneChoice = choice;
-                console.log(choice);
-
-                iconTagArr.forEach(tag => {
-                    tag.classList.remove("fa-solid");
-                    tag.classList.add("fa-regular");
-                });
-
-                iconTagArr[iconButtonsArr.indexOf(iconBtn)].classList.remove("fa-regular");
-                iconTagArr[iconButtonsArr.indexOf(iconBtn)].classList.add("fa-solid");
-
-                selectionTag.textContent = "";
-                // Handle other cases, if needed
-                if (choice > 5) {
-                    choice = ((choice - 1) % 5) + 1;
-                }
-                console.log(choice);
-                switch (choice) {
-                    case 1:
-                        selectionTag.textContent = "Rock";
-                        break;
-                    case 2:
-                        selectionTag.textContent = "Paper";
-                        break;
-                    case 3:
-                        selectionTag.textContent = "Scissors";
-                        break;
-                    case 4:
-                        selectionTag.textContent = "Lizard";
-                        break;
-                    case 5:
-                        selectionTag.textContent = "Spock";
-                        break;
-                }
-            });
-        });
-
-        // if (userHasSelected) {
-        // }
-        console.log(playerOneChoice);
-
-        // GamePlay(mode, rounds);
         switch (rounds) {
             case 1:
                 roundNum = 1;
@@ -165,6 +79,92 @@ nextBtn.addEventListener('click', function () {
                 roundNum = 4;
                 break;
         }
+    });
+}
+
+let matchEnd, playAgain;
+
+// Next Button
+nextBtn.addEventListener('click', function () {
+    if (playAgain) {
+        //restart web page
+        location.reload();
+    } else if (matchEnd) {
+        let winner;
+        if (playerOneScore > playerTwoScore) {
+            winner = "Player 1";
+        } else if (playerOneScore < playerTwoScore) {
+            winner = "Player 2/ CPU";
+        } else {
+            winner = "Both"
+        }
+        mainTitle.innerHTML = `Match Results: ${winner} wins!`;
+        mainArea.innerHTML = `Player 1 Score: ${playerOneScore} | Player 2/CPU Score: ${playerTwoScore}`;
+        selectionTag.textContent = "Play Again? Click the next arrow.";
+        playAgain = true;
+    } else if (mode && roundNum && playerOneChoice && playerTwoChoice) {
+        let result = DetermineWinner();
+        mainTitle.innerHTML = `Player 1, you ${result} this round!`;
+        mainArea.innerHTML = `P1: ${IconSwitch(playerOneChoice)} vs P2/CPU: ${IconSwitch(playerTwoChoice)}`;
+        selectionTag.textContent = "";
+
+        roundCount++;
+        console.log(roundCount);
+        console.log(roundNum);
+
+        playerOneChoice = "";
+        playerTwoChoice = "";
+        if (roundNum === roundCount) {
+            matchEnd = true;
+        }
+
+    } else if (mode && roundNum && playerOneChoice) {
+        if (mode === "modeOne") {
+            mainTitle.innerHTML = "Player 2: Make your Move";
+            mainArea.innerHTML = "";
+            selectionTag.textContent = "";
+
+            iconClassArr.forEach((type) => CreateGameArea(type));
+            iconButtonsArr.forEach(iconBtn => {
+                iconBtn.addEventListener('click', function () {
+                    let index = iconButtonsArr.indexOf(iconBtn);
+                    UpdateChoice(index);
+
+                    playerTwoChoice = choice;
+
+                    ToggleIconBtn(index);
+                });
+            });
+
+        } else if (mode === "modeCpu") {
+            mainTitle.innerHTML = "CPU: Make your Move";
+            mainArea.innerHTML = "CPU has selected...";
+            selectionTag.textContent = "";
+            callApi();
+        }
+    } else if (mode && rounds) {
+        matchEnd = false;
+        mainTitle.innerHTML = "Player 1: Make your Move";
+        mainArea.innerHTML = "";
+        iconClassArr.forEach((type) => CreateGameArea(type));
+
+        iconButtonsArr.forEach(iconBtn => {
+            iconBtn.addEventListener('click', function () {
+                let index = iconButtonsArr.indexOf(iconBtn);
+                UpdateChoice(index);
+
+                playerOneChoice = choice;
+
+                ToggleIconBtn(index);
+            });
+        });
+
+        // if (userHasSelected) {
+        // }
+        // console.log(playerOneChoice);
+
+        // GamePlay(mode, rounds);
+
         // console.log(playerOneChoice);
         // console.log(roundCount);
         // console.log(mode);
@@ -194,7 +194,8 @@ nextBtn.addEventListener('click', function () {
 // }
 
 // Game Play Variables
-let modeOneScore = 0;
+let playerOneScore = 0;
+let playerTwoScore = 0;
 let choice;
 let playerOneChoice;
 let playerTwoChoice;
@@ -223,6 +224,14 @@ let iconTagArr = [];
 //     }
 // }
 let iconBtn, iconTag;
+
+function UpdateChoice(index) {
+    choice = index + 1;
+    // Handle other cases, if needed
+    if (choice > 5) {
+        choice = ((choice - 1) % 5) + 1;
+    }
+}
 
 function CreateGameArea(type) {
     const playDiv = document.createElement("div");
@@ -278,6 +287,90 @@ function CreateGameArea(type) {
     // });
 }
 
+function ToggleIconBtn(index) {
+    iconTagArr.forEach(tag => {
+        tag.classList.remove("fa-solid");
+        tag.classList.add("fa-regular");
+    });
+
+    iconTagArr[index].classList.remove("fa-regular");
+    iconTagArr[index].classList.add("fa-solid");
+
+    selectionTag.textContent = "";
+    selectionTag.textContent = IconSwitch(choice);
+}
+
+function IconSwitch(choice) {
+    switch (choice) {
+        case 1:
+            return "Rock";
+        case 2:
+            return "Paper";
+        case 3:
+            return "Scissors";
+        case 4:
+            return "Lizard";
+        case 5:
+            return "Spock";
+    }
+}
+
+function DetermineWinner() {
+    const possibleOutcomes = [
+        ["TIE", "LOSE", "WIN", "WIN", "LOSE"],
+        ["WIN", "TIE", "LOSE", "LOSE", "WIN"],
+        ["LOSE", "WIN", "TIE", "WIN", "LOSE"],
+        ["LOSE", "WIN", "LOSE", "TIE", "WIN"],
+        ["WIN", "LOSE", "WIN", "LOSE", "TIE"]
+    ];
+
+    const outcome = possibleOutcomes[playerOneChoice - 1][playerTwoChoice - 1];
+
+    if (outcome === "WIN") {
+        playerOneScore++;
+    } else if (outcome === "LOSE") {
+        playerTwoScore++;
+    }
+
+    return outcome;
+}
+
+
+// function DetermineWinner() {
+//     switch (playerOneChoice) {
+//         case 1:
+//             if (playerTwoChoice == 1) { return "TIE!" }
+//             if (playerTwoChoice == 2) { return "LOSE!" }
+//             if (playerTwoChoice == 3) { return "WIN!" }
+//             if (playerTwoChoice == 4) { return "WIN!" }
+//             if (playerTwoChoice == 5) { return "LOSE!" }
+//         case 2:
+//             if (playerTwoChoice == 1) { return "WIN!" }
+//             if (playerTwoChoice == 2) { return "TIE!" }
+//             if (playerTwoChoice == 3) { return "LOSE!" }
+//             if (playerTwoChoice == 4) { return "LOSE!" }
+//             if (playerTwoChoice == 5) { return "WIN!" }
+//         case 3:
+//             if (playerTwoChoice == 1) { return "LOSE!" }
+//             if (playerTwoChoice == 2) { return "WIN!" }
+//             if (playerTwoChoice == 3) { return "TIE!" }
+//             if (playerTwoChoice == 4) { return "WIN!" }
+//             if (playerTwoChoice == 5) { return "LOSE!" }
+//         case 4:
+//             if (playerTwoChoice == 1) { return "LOSE!" }
+//             if (playerTwoChoice == 2) { return "WIN!" }
+//             if (playerTwoChoice == 3) { return "LOSE!" }
+//             if (playerTwoChoice == 4) { return "TIE!" }
+//             if (playerTwoChoice == 5) { return "WIN!" }
+//         case 5:
+//             if (playerTwoChoice == 1) { return "WIN!" }
+//             if (playerTwoChoice == 2) { return "LOSE!" }
+//             if (playerTwoChoice == 3) { return "WIN!" }
+//             if (playerTwoChoice == 4) { return "LOSE!" }
+//             if (playerTwoChoice == 5) { return "TIE!" }
+//     }
+// }
+
 async function callApi() {
     const promise = await fetch("https://rpslsapi.azurewebsites.net/RPSLS");
     const data = await promise.text();
@@ -299,6 +392,9 @@ async function callApi() {
             cpuChoice = 5;
             break;
     }
+
+    selectionTag.textContent = data;
+    playerTwoChoice = cpuChoice;
 }
 
 
