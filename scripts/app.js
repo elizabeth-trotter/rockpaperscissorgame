@@ -7,7 +7,7 @@ let modeCpuBtn = document.getElementById("modeCpuBtn");
 let nextBtn = document.getElementById("nextBtn");
 
 // JavaScript Global Variables
-let matchEnd, playAgain, mode, rounds, roundNum, roundCount = 0; // Mode, Round, Bool
+let matchEnd, playAgain, mode, rounds, roundNum, maxRounds, roundCount = 0; // Mode, Round, Bool
 let choice, playerOneChoice, playerTwoChoice, cpuChoice, playerOneScore = 0, playerTwoScore = 0; // Game Play
 // Round Btn Creation
 let roundButtonsArr = [];
@@ -69,12 +69,15 @@ function CreateRoundBtn(text, value) {
         switch (rounds) {
             case 1:
                 roundNum = 1;
+                maxRounds = 1;
                 break;
             case 2:
                 roundNum = 3;
+                maxRounds = 5;
                 break;
             case 3:
                 roundNum = 4;
+                maxRounds = 7;
                 break;
         }
     });
@@ -108,13 +111,18 @@ nextBtn.addEventListener('click', function () {
         selectionTag.textContent = "";
 
         roundCount++;
-        console.log(roundCount);
-        console.log(roundNum);
 
         playerOneChoice = "";
         playerTwoChoice = "";
-        if (roundNum === roundCount) {
+
+        if(playerOneScore === roundNum || playerTwoScore === roundNum){
             matchEnd = true;
+            console.log("1st evaluates true");
+        }
+
+        if (roundCount === maxRounds) {
+            matchEnd = true;
+            console.log("2nd evaluates true");
         }
     } 
     
