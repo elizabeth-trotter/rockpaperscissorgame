@@ -21,6 +21,9 @@ Key requirements:
 - Added "Loading..." text to signify to user that the game is restaring and the restart click was confirmed :white_check_mark: *1/19/24 2:20 pm*
 
 
+---
+
+
 ## Website Preview
 
 ![Website preview](./assets/websitepreview.png)
