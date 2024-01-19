@@ -94,20 +94,28 @@ nextBtn.addEventListener('click', function () {
         if (playerOneScore > playerTwoScore) {
             winner = "Player 1";
         } else if (playerOneScore < playerTwoScore) {
-            winner = "Player 2/ CPU";
+            if(mode === "modeOne"){
+                winner = "Player 2";
+            } else if(mode === "modeCpu"){
+                winner = "CPU";
+            }
+            
         } else {
             winner = "Both"
         }
         mainTitle.innerHTML = `Match Results: ${winner} wins!`;
-        mainArea.innerHTML = `Player 1 Score: ${playerOneScore} | Player 2/CPU Score: ${playerTwoScore}`;
+        mainArea.innerHTML = `Scoreboard:&nbsp ${playerOneScore} &nbsp|&nbsp ${playerTwoScore}`;
+        mainArea.classList.add("font-choice", "sixCaps", "scoreboard");
         selectionTag.textContent = "Play Again? Click the next arrow.";
+        selectionTag.classList.add("font-choice");
         playAgain = true;
     } 
     
     else if (mode && roundNum && playerOneChoice && playerTwoChoice) {
         let result = DetermineWinner();
         mainTitle.innerHTML = `Player 1, you ${result} this round!`;
-        mainArea.innerHTML = `P1: ${IconSwitch(playerOneChoice)} vs P2/CPU: ${IconSwitch(playerTwoChoice)}`;
+        mainArea.innerHTML = `${IconSwitch(playerOneChoice)} vs. ${IconSwitch(playerTwoChoice)}`;
+        mainArea.classList.add("font-choice", "sixCaps");
         selectionTag.textContent = "";
 
         roundCount++;
@@ -146,6 +154,7 @@ nextBtn.addEventListener('click', function () {
         } else if (mode === "modeCpu") {
             mainTitle.innerHTML = "CPU: Make your Move";
             mainArea.innerHTML = "CPU has selected...";
+            mainArea.classList.add("font-choice");
             selectionTag.textContent = "";
             callApi();
         }

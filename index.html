@@ -12,18 +12,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@500;600;700&family=Six+Caps&display=swap"
         rel="stylesheet">
-        <link rel="shortcut icon" href="./favicon.ico"/>
+    <link rel="shortcut icon" href="./favicon.ico" />
 </head>
 
 <body>
-
-    <!-- <nav class="navbar bg-body-tertiary navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="./index.html">
-                <i class="fa-solid fa-gamepad" style="font-size: 30px;"></i>
-            </a>
-        </div>
-    </nav> -->
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-dark bg-dark">
         <div class="container-fluid px-5">
@@ -40,12 +32,17 @@
                             Game Rules
                         </a>
                         <ul class="dropdown-menu px-2 py-2">
-                            <li class="pb-3">Each player will take turns choosing their hand. At the end of each round, the winner is determined as follows:</li>
-                            <li class="pb-1"><i class="fa-solid fa-hand-back-fist"></i>&nbsp Rock crushes: Scissors & Lizard</li>
+                            <li class="pb-3">Each player will take turns choosing their hand. At the end of each round,
+                                the winner is determined as follows:</li>
+                            <li class="pb-1"><i class="fa-solid fa-hand-back-fist"></i>&nbsp Rock crushes: Scissors &
+                                Lizard</li>
                             <li class="pb-1"><i class="fa-solid fa-hand"></i>&nbsp Paper covers: Rock & Spock</li>
-                            <li class="pb-1"><i class="fa-solid fa-hand-scissors"></i>&nbsp Scissors  cuts: Paper & Lizard</li>
-                            <li class="pb-1"><i class="fa-solid fa-hand-lizard"></i>&nbsp Lizard eats: Spock & Paper</li>
-                            <li class="pb-1"><i class="fa-solid fa-hand-spock"></i>&nbsp Spock vaporizes: Scissors & Rock</li>
+                            <li class="pb-1"><i class="fa-solid fa-hand-scissors"></i>&nbsp Scissors cuts: Paper &
+                                Lizard</li>
+                            <li class="pb-1"><i class="fa-solid fa-hand-lizard"></i>&nbsp Lizard eats: Spock & Paper
+                            </li>
+                            <li class="pb-1"><i class="fa-solid fa-hand-spock"></i>&nbsp Spock vaporizes: Scissors &
+                                Rock</li>
                         </ul>
                     </li>
                 </ul>
@@ -53,38 +50,54 @@
         </div>
     </nav>
 
-    <div class="container-fluid bg text-center">
-        <div class="container-fluid py-5" style="width: 60%; height: 85vh;">
+    <div class="container-fluid bg text-center" style="height: 85vh;">
+        <div class="container-fluid padding-header" style="width: 60%;">
             <div class="row">
-                <h1 class="sixCaps text-center py-5">Rock, Paper, Scissors, Lizard, Spock</h1>
+                <h1 class="sixCaps headFont text-center py-5">Rock, Paper, Scissors, Lizard, Spock</h1>
             </div>
 
             <hr class="">
 
-            <div class="row pt-4 pb-1 josefinSlab">
-                <h2 id="mainTitle">Choose Mode</h2>
+            <div class="container gameBox d-flex">
+                <div class="row w-100 m-auto align-items-center justify-content-center">
+                    <div class="row josefinSlab">
+                        <h2 id="mainTitle" class="sub-heading pb-3">Choose Mode</h2>
+                    </div>
+    
+                    <div id="mainArea" class="row pb-3 justify-content-center">
+                        <div class="col-auto">
+                            <button id="modeOneBtn" class="btn btn-light bg-transparent whiteF px-4 py-2">P1 vs. P2</button>
+                        </div>
+                        <div class="col-auto">
+                            <button id="modeCpuBtn" class="btn btn-light bg-transparent whiteF px-4 py-2">P1 vs.
+                                CPU</button>
+                        </div>
+                    </div>
+    
+                    <div id="mainAreaBelow" class="row justify-content-center">
+                        <p id="selectionTag" class="pt-1 sixCaps font-choice"></p>
+                    </div>
+    
+                    <div class="row justify-content-end pe-5">
+                        <div class="col-auto">
+                            <button id="nextBtn" class="btn">
+                                <i class="fa-solid fa-circle-chevron-right font-30"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <!-- <div class="row d-flex justify-content-center">
+                    <div class="col-auto">
+                        <iframe src="https://www.youtube.com/embed/pIpmITBocfM?si=lmYspNiH4lL2sxWV"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe> 
+                    </div>
+                </div> -->
             </div>
 
-            <div id="mainArea" class="row justify-content-center pb-5">
-                <div class="col-auto">
-                    <button id="modeOneBtn" class="btn btn-light bg-transparent whiteF px-4 py-2">1 vs. 1</button>
-                </div>
-                <div class="col-auto">
-                    <button id="modeCpuBtn" class="btn btn-light bg-transparent whiteF px-3 py-2">1 vs. CPU</button>
-                </div>
-            </div>
-
-            <div id="mainAreaBelow" class="row justify-content-center">
-                <p id="selectionTag"></p>
-            </div>
-
-            <div class="row justify-content-end pe-5 pb-4">
-                <div class="col-auto">
-                    <button id="nextBtn" class="btn">
-                        <i class="fa-solid fa-circle-chevron-right font-30"></i>
-                    </button>
-                </div>
-            </div>
 
             <hr class="pb-5">
         </div>

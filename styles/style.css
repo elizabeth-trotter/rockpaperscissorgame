@@ -11,7 +11,16 @@
 
 .sixCaps {
     font-family: 'Six Caps', sans-serif;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
+}
+
+.scoreboard {
+    /* letter-spacing: 2px !important; */
+    font-size: 28px !important;
+}
+
+.headFont {
+    font-size: 45px;
 }
 
 .josefinSlab {
@@ -36,7 +45,28 @@ hr {
     font-size: 30px;
 }
 
+.font-choice {
+    font-size: 25px;
+    letter-spacing: 1px;
+}
+
 .font-60 {
     font-size: 50px;
     /* font-weight: lighter; */
+}
+
+.sub-heading {
+    font-size: 35px;
+}
+
+.padding-header {
+    padding-top: 5vh;
+}
+
+.gameBox {
+    height: 45vh;
+}
+
+.padding-sub-header {
+    padding-top: 15vh;
 }
