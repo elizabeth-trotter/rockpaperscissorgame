@@ -30,17 +30,17 @@ Key requirements:
 <p align="right">Figure 1: Website game preview</p>
 
 
-## Flowchart
-
-![Flowchart](./assets/Flowchart.png)
-<p align="right">Figure 2: Flowchart of the logic prior to development</p>
-
-
 ## Prototype
 
 Click [Prototype V 1](https://www.figma.com/proto/kRB6CfbfABKfZ7iQk4eEnk/Rock-Paper-Scissors-Lizard-Spock?node-id=73-10&starting-point-node-id=73%3A10&mode=design&t=GtNA1yNpvZ9MCyWt-1) 
 to visit the **rough draft Figma prototype design**. (Design currently in progress)
 - *Notable features include game rules, hand icons, designed footer.*
+
+
+## Flowchart
+
+![Flowchart](./assets/Flowchart.png)
+<p align="right">Figure 2: Flowchart of the logic prior to development</p>
 
 
 ---
