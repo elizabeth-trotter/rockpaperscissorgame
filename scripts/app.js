@@ -103,7 +103,7 @@ nextBtn.addEventListener('click', function () {
         } else {
             winner = "Both"
         }
-        mainTitle.innerHTML = `Match Results: ${winner} wins!`;
+        mainTitle.innerHTML = `Final Results: ${winner} wins!`;
         mainArea.innerHTML = `Scoreboard:&nbsp ${playerOneScore} &nbsp|&nbsp ${playerTwoScore}`;
         mainArea.classList.add("font-choice", "sixCaps", "scoreboard");
         selectionTag.textContent = "Play Again? Click the next arrow.";
@@ -114,7 +114,7 @@ nextBtn.addEventListener('click', function () {
     else if (mode && roundNum && playerOneChoice && playerTwoChoice) {
         let result = DetermineWinner();
         mainTitle.innerHTML = `Player 1, you ${result} this round!`;
-        mainArea.innerHTML = `${IconSwitch(playerOneChoice)} vs. ${IconSwitch(playerTwoChoice)}`;
+        mainArea.innerHTML = `Round ${roundCount + 1} Recap: ${IconSwitch(playerOneChoice)} vs. ${IconSwitch(playerTwoChoice)}`;
         mainArea.classList.add("font-choice", "sixCaps");
         selectionTag.textContent = "";
 
