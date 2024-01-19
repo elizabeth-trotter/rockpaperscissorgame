@@ -81,3 +81,15 @@ hr {
         width: 90% !important;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .footerMediumHide {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .footerSmallHide {
+        display: none !important;
+    }
+}
