@@ -86,6 +86,9 @@ function CreateRoundBtn(text, value) {
 // Next Button
 nextBtn.addEventListener('click', function () {
     if (playAgain) {
+        mainTitle.innerHTML = "";
+        mainArea.innerHTML = "Loading...";
+        selectionTag.textContent = "";
         location.reload(); //restart web page
     } 
     
