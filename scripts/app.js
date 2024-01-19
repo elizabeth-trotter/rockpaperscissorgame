@@ -1,17 +1,20 @@
 // Document Variables
-let header = document.getElementById("header");
 let mainTitle = document.getElementById("mainTitle");
 let mainArea = document.getElementById("mainArea");
 let selectionTag = document.getElementById("selectionTag");
-
 let modeOneBtn = document.getElementById("modeOneBtn");
 let modeCpuBtn = document.getElementById("modeCpuBtn");
-
 let nextBtn = document.getElementById("nextBtn");
 
-// JavaScript Variables
-let mode, rounds, roundNum;
-let roundCount = 0;
+// JavaScript Global Variables
+let matchEnd, playAgain, mode, rounds, roundNum, roundCount = 0; // Mode, Round, Bool
+let choice, playerOneChoice, playerTwoChoice, cpuChoice, playerOneScore = 0, playerTwoScore = 0; // Game Play
+// Round Btn Creation
+let roundButtonsArr = [];
+const roundLabelsArr = ["1 / 1", "3 / 5", "4 / 7"];
+// Icon Btn Creation
+let iconBtn, iconTag, iconButtonsArr = [], iconTagArr = [];
+const iconClassArr = ["fa-hand-back-fist", "fa-hand", "fa-hand-scissors", "fa-hand-lizard", "fa-hand-spock"];
 
 // Mode Selection
 modeOneBtn.addEventListener('click', function () {
@@ -41,10 +44,6 @@ function ToggleModeBtn(clickedBtn, unselectedBtn) {
     }
 }
 
-// Round Variables
-let roundButtonsArr = [];
-const roundLabelsArr = ["1 / 1", "3 / 5", "4 / 7"];
-
 // Round Selection
 function CreateRoundBtn(text, value) {
     const roundDiv = document.createElement("div");
@@ -67,7 +66,6 @@ function CreateRoundBtn(text, value) {
             roundBtn.classList.remove("bg-transparent", "whiteF");
             rounds = value;
         }
-
         switch (rounds) {
             case 1:
                 roundNum = 1;
@@ -82,14 +80,13 @@ function CreateRoundBtn(text, value) {
     });
 }
 
-let matchEnd, playAgain;
-
 // Next Button
 nextBtn.addEventListener('click', function () {
     if (playAgain) {
-        //restart web page
-        location.reload();
-    } else if (matchEnd) {
+        location.reload(); //restart web page
+    } 
+    
+    else if (matchEnd) {
         let winner;
         if (playerOneScore > playerTwoScore) {
             winner = "Player 1";
@@ -102,7 +99,9 @@ nextBtn.addEventListener('click', function () {
         mainArea.innerHTML = `Player 1 Score: ${playerOneScore} | Player 2/CPU Score: ${playerTwoScore}`;
         selectionTag.textContent = "Play Again? Click the next arrow.";
         playAgain = true;
-    } else if (mode && roundNum && playerOneChoice && playerTwoChoice) {
+    } 
+    
+    else if (mode && roundNum && playerOneChoice && playerTwoChoice) {
         let result = DetermineWinner();
         mainTitle.innerHTML = `Player 1, you ${result} this round!`;
         mainArea.innerHTML = `P1: ${IconSwitch(playerOneChoice)} vs P2/CPU: ${IconSwitch(playerTwoChoice)}`;
@@ -117,8 +116,9 @@ nextBtn.addEventListener('click', function () {
         if (roundNum === roundCount) {
             matchEnd = true;
         }
-
-    } else if (mode && roundNum && playerOneChoice) {
+    } 
+    
+    else if (mode && roundNum && playerOneChoice) {
         if (mode === "modeOne") {
             mainTitle.innerHTML = "Player 2: Make your Move";
             mainArea.innerHTML = "";
@@ -135,14 +135,15 @@ nextBtn.addEventListener('click', function () {
                     ToggleIconBtn(index);
                 });
             });
-
         } else if (mode === "modeCpu") {
             mainTitle.innerHTML = "CPU: Make your Move";
             mainArea.innerHTML = "CPU has selected...";
             selectionTag.textContent = "";
             callApi();
         }
-    } else if (mode && rounds) {
+    } 
+    
+    else if (mode && rounds) {
         matchEnd = false;
         mainTitle.innerHTML = "Player 1: Make your Move";
         mainArea.innerHTML = "";
@@ -158,77 +159,18 @@ nextBtn.addEventListener('click', function () {
                 ToggleIconBtn(index);
             });
         });
-
-        // if (userHasSelected) {
-        // }
-        // console.log(playerOneChoice);
-
-        // GamePlay(mode, rounds);
-
-        // console.log(playerOneChoice);
-        // console.log(roundCount);
-        // console.log(mode);
-        // console.log(roundNum);
-    }
+    } 
+    
     else if (mode) {
         mainTitle.innerHTML = "Choose Rounds";
         mainArea.innerHTML = "";
         roundLabelsArr.forEach((label, index) => CreateRoundBtn(label, index + 1));
-        // console.log(choice);
-        // console.log(roundCount);
-        // console.log(mode);
-        // console.log(roundNum);
     }
 });
 
-// Game Play
-// async function GamePlay(mode, rounds) {
-//     if (mode === "modeOne") {
-//         mainTitle.innerHTML = "Player 1: Make your Move";
-//         mainArea.innerHTML = "";
-//         RoundControl(rounds);
-//     } else if (mode === "modeCpu") {
-//         mainTitle.innerHTML = "Player 1: Make your Move";
-//         mainArea.innerHTML = "";
-//     }
-// }
-
-// Game Play Variables
-let playerOneScore = 0;
-let playerTwoScore = 0;
-let choice;
-let playerOneChoice;
-let playerTwoChoice;
-let cpuChoice;
-
-// Icon Variables
-let iconClassArr = ["fa-hand-back-fist", "fa-hand", "fa-hand-scissors", "fa-hand-lizard", "fa-hand-spock"];
-let iconButtonsArr = [];
-let iconTagArr = [];
-
-// async function RoundControl(rounds) {
-//     let roundNum;
-//     switch (rounds) {
-//         case 1:
-//             roundNum = 1;
-//             break;
-//         case 2:
-//             roundNum = 3;
-//             break;
-//         case 3:
-//             roundNum = 4;
-//             break;
-//     }
-//     for (let i = 0; i < roundNum; i++) {
-//         iconClassArr.forEach((type) => CreateGameArea(type));
-//     }
-// }
-let iconBtn, iconTag;
-
-function UpdateChoice(index) {
+function UpdateChoice(index) { 
     choice = index + 1;
-    // Handle other cases, if needed
-    if (choice > 5) {
+    if (choice > 5) { // Handle other cases, if needed
         choice = ((choice - 1) % 5) + 1;
     }
 }
@@ -249,42 +191,6 @@ function CreateGameArea(type) {
 
     iconTagArr.push(iconTag);
     iconButtonsArr.push(iconBtn);
-
-    // iconBtn.addEventListener('click', function () {
-    //     choice = iconButtonsArr.indexOf(iconBtn) + 1;
-    //     userHasSelected = true;
-    //     // console.log(choice);
-    //     iconTagArr.forEach(tag => {
-    //         tag.classList.remove("fa-solid");
-    //         tag.classList.add("fa-regular");
-    //     });
-    //     iconTag.classList.remove("fa-regular");
-    //     iconTag.classList.add("fa-solid");
-
-    //     selectionTag.textContent = "";
-    //     // Handle other cases, if needed
-    //     if (choice > 5) {
-    //         choice = ((choice - 1) % 5) + 1;
-    //     }
-    //     // console.log(choice);
-    //     switch (choice) {
-    //         case 1:
-    //             selectionTag.textContent = "Rock";
-    //             break;
-    //         case 2:
-    //             selectionTag.textContent = "Paper";
-    //             break;
-    //         case 3:
-    //             selectionTag.textContent = "Scissors";
-    //             break;
-    //         case 4:
-    //             selectionTag.textContent = "Lizard";
-    //             break;
-    //         case 5:
-    //             selectionTag.textContent = "Spock";
-    //             break;
-    //     }
-    // });
 }
 
 function ToggleIconBtn(index) {
@@ -335,42 +241,6 @@ function DetermineWinner() {
     return outcome;
 }
 
-
-// function DetermineWinner() {
-//     switch (playerOneChoice) {
-//         case 1:
-//             if (playerTwoChoice == 1) { return "TIE!" }
-//             if (playerTwoChoice == 2) { return "LOSE!" }
-//             if (playerTwoChoice == 3) { return "WIN!" }
-//             if (playerTwoChoice == 4) { return "WIN!" }
-//             if (playerTwoChoice == 5) { return "LOSE!" }
-//         case 2:
-//             if (playerTwoChoice == 1) { return "WIN!" }
-//             if (playerTwoChoice == 2) { return "TIE!" }
-//             if (playerTwoChoice == 3) { return "LOSE!" }
-//             if (playerTwoChoice == 4) { return "LOSE!" }
-//             if (playerTwoChoice == 5) { return "WIN!" }
-//         case 3:
-//             if (playerTwoChoice == 1) { return "LOSE!" }
-//             if (playerTwoChoice == 2) { return "WIN!" }
-//             if (playerTwoChoice == 3) { return "TIE!" }
-//             if (playerTwoChoice == 4) { return "WIN!" }
-//             if (playerTwoChoice == 5) { return "LOSE!" }
-//         case 4:
-//             if (playerTwoChoice == 1) { return "LOSE!" }
-//             if (playerTwoChoice == 2) { return "WIN!" }
-//             if (playerTwoChoice == 3) { return "LOSE!" }
-//             if (playerTwoChoice == 4) { return "TIE!" }
-//             if (playerTwoChoice == 5) { return "WIN!" }
-//         case 5:
-//             if (playerTwoChoice == 1) { return "WIN!" }
-//             if (playerTwoChoice == 2) { return "LOSE!" }
-//             if (playerTwoChoice == 3) { return "WIN!" }
-//             if (playerTwoChoice == 4) { return "LOSE!" }
-//             if (playerTwoChoice == 5) { return "TIE!" }
-//     }
-// }
-
 async function callApi() {
     const promise = await fetch("https://rpslsapi.azurewebsites.net/RPSLS");
     const data = await promise.text();
@@ -397,137 +267,3 @@ async function callApi() {
     playerTwoChoice = cpuChoice;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Mode Selection
-// modeOneBtn.addEventListener('click', function () {
-//     if (mode) {
-//         modeCpuBtn.classList.add("bg-transparent", "whiteF");
-//         modeOneBtn.classList.remove("bg-transparent", "whiteF");
-//         mode = "modeOne";
-//     } else {
-//         modeOneBtn.classList.remove("bg-transparent", "whiteF");
-//         mode = "modeOne";
-//     }
-// });
-// modeCpuBtn.addEventListener('click', function () {
-//     if (mode) {
-//         modeOneBtn.classList.add("bg-transparent", "whiteF");
-//         modeCpuBtn.classList.remove("bg-transparent", "whiteF");
-//         mode = "modeCpu";
-//     } else {
-//         modeCpuBtn.classList.remove("bg-transparent", "whiteF");
-//         mode = "modeCpu";
-//     }
-// });
-
-// nextBtn.addEventListener('click', function () {
-//     if (mode && !rounds) {
-//         mainTitle.innerHTML = "Choose Rounds";
-//         mainArea.innerHTML = "";
-//         // Button One
-//         const roundOneDiv = document.createElement("div");
-//         roundOneDiv.setAttribute("class", "col-auto");
-//         const roundOneBtn = document.createElement("button");
-//         roundOneBtn.classList.add("btn", "btn-light", "bg-transparent", "whiteF", "px-4", "py-2");
-//         roundOneBtn.textContent = "1 / 1";
-//         roundOneDiv.appendChild(roundOneBtn);
-//         mainArea.appendChild(roundOneDiv);
-//         roundOneBtn.addEventListener('click', function () {
-//             if (rounds) {
-//                 roundThreeBtn.classList.add("bg-transparent", "whiteF");
-//                 roundTwoBtn.classList.add("bg-transparent", "whiteF");
-//                 roundOneBtn.classList.remove("bg-transparent", "whiteF");
-//                 rounds = "1";
-//             } else {
-//                 roundOneBtn.classList.remove("bg-transparent", "whiteF");
-//                 rounds = "1";
-//             }
-//             rounds = "1";
-//         });
-//         // Button Two
-//         const roundTwoDiv = document.createElement("div");
-//         roundTwoDiv.setAttribute("class", "col-auto");
-//         const roundTwoBtn = document.createElement("button");
-//         roundTwoBtn.classList.add("btn");
-//         roundTwoBtn.classList.add("btn-light");
-//         roundTwoBtn.classList.add("bg-transparent");
-//         roundTwoBtn.classList.add("whiteF");
-//         roundTwoBtn.classList.add("px-4");
-//         roundTwoBtn.classList.add("py-2");
-//         roundTwoBtn.textContent = "3 / 5";
-//         roundTwoDiv.appendChild(roundTwoBtn);
-//         mainArea.appendChild(roundTwoDiv);
-//         roundTwoBtn.addEventListener('click', function () {
-//             if (rounds) {
-//                 roundThreeBtn.classList.add("bg-transparent");
-//                 roundThreeBtn.classList.add("whiteF");
-//                 roundOneBtn.classList.add("bg-transparent");
-//                 roundOneBtn.classList.add("whiteF");
-//                 roundTwoBtn.classList.remove("bg-transparent");
-//                 roundTwoBtn.classList.remove("whiteF");
-//                 rounds = "2";
-//             } else {
-//                 roundTwoBtn.classList.remove("bg-transparent");
-//                 roundTwoBtn.classList.remove("whiteF");
-//                 rounds = "2";
-//             }
-//             rounds = "2";
-//         });
-//         // Button Three
-//         const roundThreeDiv = document.createElement("div");
-//         roundThreeDiv.setAttribute("class", "col-auto");
-//         const roundThreeBtn = document.createElement("button");
-//         roundThreeBtn.classList.add("btn");
-//         roundThreeBtn.classList.add("btn-light");
-//         roundThreeBtn.classList.add("bg-transparent");
-//         roundThreeBtn.classList.add("whiteF");
-//         roundThreeBtn.classList.add("px-4");
-//         roundThreeBtn.classList.add("py-2");
-//         roundThreeBtn.textContent = "4 / 7";
-//         roundThreeDiv.appendChild(roundThreeBtn);
-//         mainArea.appendChild(roundThreeDiv);
-//         roundThreeBtn.addEventListener('click', function () {
-//             if (rounds) {
-//                 roundOneBtn.classList.add("bg-transparent");
-//                 roundOneBtn.classList.add("whiteF");
-//                 roundTwoBtn.classList.add("bg-transparent");
-//                 roundTwoBtn.classList.add("whiteF");
-//                 roundThreeBtn.classList.remove("bg-transparent");
-//                 roundThreeBtn.classList.remove("whiteF");
-//                 rounds = "3";
-//             } else {
-//                 roundThreeBtn.classList.remove("bg-transparent");
-//                 roundThreeBtn.classList.remove("whiteF");
-//                 rounds = "3";
-//             }
-//             rounds = "3";
-//         });
-//     } else if (mode && rounds) {
-//         gamePlay(mode, rounds);
-//     }
-// });
