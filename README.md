@@ -1,4 +1,4 @@
-# Rock, Paper, Scissor, Lizard, Spock!
+# Rock, Paper, Scissor, Lizard, Spock! <i class="fa-solid fa-hand-back-fist"></i><i class="fa-solid fa-hand"></i><i class="fa-solid fa-hand-scissors"></i><i class="fa-solid fa-hand-lizard"></i><i class="fa-solid fa-hand-spock"></i>
 
 
 **Name:** Elizabeth Trotter
@@ -10,6 +10,9 @@
 - *PvP and PvCPU*
 - *Different modes: 1 win / 3 out of 5 / 4 out of 7*
 - *Show the rules of the game*
+
+
+<i class="fa-solid fa-hand-back-fist"></i><i class="fa-solid fa-hand"></i><i class="fa-solid fa-hand-scissors"></i><i class="fa-solid fa-hand-lizard"></i><i class="fa-solid fa-hand-spock"></i>
 
 
 ## Peer Review
