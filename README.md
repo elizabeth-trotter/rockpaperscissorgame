@@ -3,15 +3,13 @@
 
 **Name:** Elizabeth Trotter
 
-**Project Description:** Created a Rock, Paper, Scissors, Lizard, Spock game utilizing `JavaScript`.
+**Project Note:** This project is a play on the popular `Rock, Paper, Scissors Game` utilizing `JavaScript`. I approached this project with the intention of creating a `Single Page Application`. This project will load a `single HTML page` and `dynamically update the content` as users interact with the application, reducing the need to reload the entire page. My hope was to practice my JavaScript skills related to `creating elements` and making necessary changes within a single "game container". 
 
-Key requirements:
-- PvP and PvCPU
-- Different modes: 1 win / 3 out of 5 / 4 out of 7
-- Show the rules of the game
 
-> [!NOTE]
-> I approached this project with the intention of creating a `Single Page Application`. This project will load a `single HTML page` and `dynamically update the content` as users interact with the application, reducing the need to reload the entire page. My hope was to practice my `JavaScript` skills related to `creating elements` and making necessary changes within a single "game container". 
+***Key Game Requirements:***
+- *PvP and PvCPU*
+- *Different modes: 1 win / 3 out of 5 / 4 out of 7*
+- *Show the rules of the game*
 
 
 ## Peer Review
