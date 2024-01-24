@@ -18,7 +18,7 @@
 > **Comment(s):** The design is very clean. Both the CPU and player vs player mode are functional. I think the patterns at the bottom and the solid icons are a nice addition as well. The only problem I can find is when I restart the game, the page takes a while to load up. Overall good job.
 
 **Issues Resolved:**
-- Added "Loading..." text to signify to user that the game is restaring and the restart click was confirmed :white_check_mark: *1/19/24 2:20 pm*
+- Added "Loading..." text to signify to user that the game is restarting and the button click was confirmed :white_check_mark: *1/19/24 2:20 pm*
 
 
 ---
