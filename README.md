@@ -1,9 +1,9 @@
-# Rock, Paper, Scissor, Lizard, Spock!
+# Rock, Paper, Scissor, Lizard, Spock! &nbsp;&nbsp;<a href="https://rpslsgame.vercel.app/">![Website](https://img.shields.io/website?url=https%3A%2F%2Frpslsgame.vercel.app%2F&up_message=ONLINE&up_color=%23355E3B&down_message=OFFLINE&down_color=red&style=for-the-badge&logo=vercel)</a>
 
 
 **Name:** Elizabeth Trotter
 
-**Project Note:** This project is a play on the popular `Rock, Paper, Scissors Game` utilizing `JavaScript`. I approached this project with the intention of creating a `Single Page Application`. This project will load a `single HTML page` and `dynamically update the content` as users interact with the application, reducing the need to reload the entire page. My hope was to practice my JavaScript skills related to `creating elements` and making necessary changes within a single "game container". 
+**Project Note:** This project is a play on the popular `Rock, Paper, Scissors Game` utilizing `JavaScript`. I approached this project with the intention of creating a `Single Page Application`. On start, the application will load a `single HTML page` and `dynamically update the content` as users interact with the it, reducing the need to reload the entire page. My goal was to practice my JavaScript skills related to `creating elements` and making necessary changes within a single game container. 
 
 
 ***Key Game Requirements:***
@@ -27,7 +27,7 @@
 ## Website Preview
 
 ![Website preview](./assets/websitepreview.png)
-<p align="right">Figure 1: Website game preview</p>
+<p align="right">Figure 1: Website game play preview</p>
 
 
 ## Prototype
