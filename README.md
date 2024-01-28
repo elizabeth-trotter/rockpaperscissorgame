@@ -27,7 +27,7 @@
 ## Website Preview
 
 ![Website preview](./assets/websitepreview.png)
-<p align="right">Figure 1: Website game play preview</p>
+<p align="right">Figure 1: Website game play in action</p>
 
 
 ## Prototype
