@@ -5,14 +5,16 @@
 
 **Project Note:** This project is a play on the popular `Rock, Paper, Scissors Game` utilizing `JavaScript`. I approached this project with the intention of creating a `Single Page Application`. On start, the application will load a `single HTML page` and `dynamically update the content` as users interact with the it, reducing the need to reload the entire page. My goal was to practice my JavaScript skills related to `creating elements` and making necessary changes within a single game container. 
 
-- To Do's:
-  - [ ] Improve UI / UX
-  - [ ] Explore different font pairings for intermittent game score updates
 
 ***Key Game Requirements:***
 - *PvP and PvCPU*
 - *Different modes: 1 win / 3 out of 5 / 4 out of 7*
 - *Show the rules of the game*
+
+
+## To Do's:
+  - [ ] Improve UI / UX
+  - [ ] Explore different font pairings for intermittent game score updates
 
 
 ## Peer Review
