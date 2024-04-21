@@ -47,7 +47,7 @@ function ToggleModeBtn(clickedBtn, unselectedBtn) {
 // Round Selection
 function CreateRoundBtn(text, value) {
     const roundDiv = document.createElement("div");
-    roundDiv.setAttribute("class", "col-auto");
+    roundDiv.setAttribute("class", "col-auto mb-2 mb-sm-0");
 
     const roundBtn = document.createElement("button");
     roundBtn.classList.add("btn", "btn-light", "bg-transparent", "whiteF", "px-4", "py-2");

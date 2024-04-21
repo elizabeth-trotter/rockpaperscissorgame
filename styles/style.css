@@ -68,7 +68,7 @@ hr {
 }
 
 .gameBox {
-    height: 45vh;
+    min-height: 45vh;
 }
 
 .padding-sub-header {
