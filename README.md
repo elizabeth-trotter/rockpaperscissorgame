@@ -1,4 +1,4 @@
-# Rock, Paper, Scissor, Lizard, Spock! &nbsp;&nbsp;<a href="https://rpslsgame.vercel.app/">![Website](https://img.shields.io/website?url=https%3A%2F%2Frpslsgame.vercel.app%2F&up_message=ONLINE&up_color=%23355E3B&down_message=OFFLINE&down_color=red&style=for-the-badge&logo=vercel)</a>
+# Rock, Paper, Scissor, Lizard, Spock! &ensp;<a href="https://rpslsgame.vercel.app/">![Website](https://img.shields.io/website?url=https%3A%2F%2Frpslsgame.vercel.app%2F&up_message=ONLINE&up_color=%23355E3B&down_message=OFFLINE&down_color=%238B0000&style=for-the-badge&logo=vercel)</a>
 
 
 **Name:** Elizabeth Trotter
@@ -10,6 +10,11 @@
 - *PvP and PvCPU*
 - *Different modes: 1 win / 3 out of 5 / 4 out of 7*
 - *Show the rules of the game*
+
+
+## To Do's:
+  - [ ] Improve UI / UX
+  - [ ] Explore different font pairings for intermittent game score updates
 
 
 ## Peer Review
@@ -27,7 +32,7 @@
 ## Website Preview
 
 ![Website preview](./assets/websitepreview.png)
-<p align="right">Figure 1: Website game play preview</p>
+<p align="right">Figure 1: Website game play in action</p>
 
 
 ## Prototype
