@@ -38,7 +38,7 @@
 ## Prototype
 
 Click [Prototype V 1](https://www.figma.com/proto/kRB6CfbfABKfZ7iQk4eEnk/Rock-Paper-Scissors-Lizard-Spock?node-id=73-10&starting-point-node-id=73%3A10&mode=design&t=GtNA1yNpvZ9MCyWt-1) 
-to visit the **rough draft Figma prototype design**. (Design currently in progress)
+to visit the **Figma prototype design**.
 - *Notable features include game rules, hand icons, designed footer.*
 
 
